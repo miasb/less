@@ -82,6 +82,7 @@ public int proc_tab;            /* Special handling of tab */
 public int proc_return;         /* Special handling of carriage return */
 public int match_shift;         /* Extra horizontal shift on search match */
 public long match_shift_fraction = NUM_FRAC_DENOM/2; /* 1/2 of screen width */
+public int padding=0;				/* Set padding width */
 public char intr_char = CONTROL('X'); /* Char to interrupt reads */
 #if HILITE_SEARCH
 public int hilite_search;       /* Highlight matched search patterns? */
@@ -173,6 +174,7 @@ static struct optname no_vbell_optname = { "no-vbell", NULL };
 static struct optname intr_optname = { "intr", NULL };
 static struct optname wordwrap_optname = { "wordwrap", NULL };
 static struct optname show_preproc_error_optname = { "show-preproc-errors", NULL };
+static struct optname padding_optname     = { "padding",              NULL };
 static struct optname proc_backspace_optname = { "proc-backspace", NULL };
 static struct optname proc_tab_optname = { "proc-tab", NULL };
 static struct optname proc_return_optname = { "proc-return", NULL };
@@ -722,6 +724,10 @@ static struct loption option[] =
 		{
 			"Search match shift: ",
 			".d",
+	{ OLETTER_NONE, &padding_optname,
+		NUMBER, -1, &padding, NULL,
+		{
+			"Line Padding: ",
 			NULL
 		}
 	},

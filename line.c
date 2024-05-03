@@ -103,6 +103,7 @@ extern LWCHAR rscroll_char;
 extern int rscroll_attr;
 extern int use_color;
 extern int status_line;
+extern int padding;
 
 static char mbc_buf[MAX_UTF_CHAR_LEN];
 static int mbc_buf_len = 0;
@@ -373,7 +374,16 @@ public void plinestart(POSITION pos)
 			add_pfx(buf[i], AT_BOLD|AT_COLOR_LINENUM);
 		add_pfx(' ', AT_NORMAL);
 	}
+
 	end_column = (int) linebuf.pfx_end; /*{{type-issue}}*/
+
+	/*
+	 * Padding for new lines 
+	 */
+	for (i = 0; i < padding; i++)
+		add_pfx(' ', AT_NORMAL);
+
+	end_column = linebuf.pfx_end;
 }
 
 /*
@@ -691,7 +701,7 @@ static int fits_on_screen(int w, int a)
 	if (ctldisp == OPT_ON)
 		/* We're not counting, so say that everything fits. */
 		return 1;
-	return (end_column - cshift + w + attr_ewidth(a) <= sc_width);
+	return (end_column - cshift + w + attr_ewidth(a) <= sc_width-padding);
 }
 
 /*
